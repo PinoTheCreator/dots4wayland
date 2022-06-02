@@ -1,0 +1,171 @@
+# Typical laptop setup, with wifi, brightness, battery etc, for
+# i3/Sway.
+
+# For X11/i3, you'll want to replace calls to swaymsg with i3-msg, and
+# the sway-xkb module with the xkb module.
+
+# fonts we'll be re-using here and there
+awesome: &awesome Font Awesome 5 Free:style=solid:pixelsize=14
+awesome_brands: &awesome_brands Font Awesome 5 Brands:pixelsize=16
+icon-margin: &icon-margin {left-margin: 6, right-margin: 6}
+font-icon: &font-icon "SauceCodePro Nerd Font:size=13"
+
+# This is THE bar configuration
+bar:
+  height: 26
+  location: top
+  spacing: 5
+  margin: 7
+
+  # Default font
+  font: JetBrains Mono:pixelsize=17
+
+  foreground: ffffffff
+  background: 1b004dff
+
+  border:
+    width: 1
+    color: 999999cc
+    margin: 0
+    top-margin: 0
+  
+  left:
+    - script:
+        path: /home/carlo/.config/yambar/dwl-tags.sh
+        args: [1]
+        anchors:
+          - occupied: &occupied {foreground: 57bbf4ff}
+          - focused: &focused {foreground: ff0051ff}
+          - default: &default {foreground: d2ccd6ff}
+        content:
+          - map:
+              margin: 4
+              tag: tag_0_occupied
+              values:
+                true:
+                  map:
+                    tag: tag_0_focused
+                    values:
+                      true: {string: {text: "{tag_0}", <<: *focused}}
+                      false: {string: {text: "{tag_0}", <<: *occupied}}
+                false:
+                  map:
+                    tag: tag_0_focused
+                    values:
+                      true: {string: {text: "{tag_0}", <<: *focused}}
+                      false: {string: {text: "{tag_0}", <<: *default}}
+          - map:
+              margin: 4
+              tag: tag_1_occupied
+              values:
+                true:
+                  map:
+                    tag: tag_1_focused
+                    values:
+                      true: {string: {text: "{tag_1}", <<: *focused}}
+                      false: {string: {text: "{tag_1}", <<: *occupied}}
+                false:
+                  map:
+                    tag: tag_1_focused
+                    values:
+                      true: {string: {text: "{tag_1}", <<: *focused}}
+                      false: {string: {text: "{tag_1}", <<: *default}}
+          - map:
+              margin: 4
+              tag: tag_2_occupied
+              values:
+                true:
+                  map:
+                    tag: tag_2_focused
+                    values:
+                      true: {string: {text: "{tag_2}", <<: *focused}}
+                      false: {string: {text: "{tag_2}", <<: *occupied}}
+                false:
+                  map:
+                    tag: tag_2_focused
+                    values:
+                      true: {string: {text: "{tag_2}", <<: *focused}}
+                      false: {string: {text: "{tag_2}", <<: *default}}
+          - map:
+              margin: 4
+              tag: tag_3_occupied
+              values:
+                true:
+                  map:
+                    tag: tag_3_focused
+                    values:
+                      true: {string: {text: "{tag_3}", <<: *focused}}
+                      false: {string: {text: "{tag_3}", <<: *occupied}}
+                false:
+                  map:
+                    tag: tag_3_focused
+                    values:
+                      true: {string: {text: "{tag_3}", <<: *focused}}
+                      false: {string: {text: "{tag_3}", <<: *default}}
+          - map:
+              margin: 4
+              tag: tag_4_occupied
+              values:
+                true:
+                  map:
+                    tag: tag_4_focused
+                    values:
+                      true: {string: {text: "{tag_4}", <<: *focused}}
+                      false: {string: {text: "{tag_4}", <<: *occupied}}
+                false:
+                  map:
+                    tag: tag_4_focused
+                    values:
+                      true: {string: {text: "{tag_4}", <<: *focused}}
+                      false: {string: {text: "{tag_4}", <<: *default}}
+          - list:
+              spacing: 10
+              items:
+                - string: {text: "{layout}"}
+                - string: {text: "{title}", foreground: ff0051ff}
+
+  right:
+    - network:
+        name: wlp3s0
+        content:
+          map:
+            tag: state
+            values:
+              up:
+                - string: {text: " {ssid}", foreground: 38c79eff}
+              down:
+                - string: {text: , font: *awesome, foreground: ff0000ff}
+
+    - script:
+       path: /home/carlo/.config/yambar/cpu.sh
+       args: [5]
+       content: { string: {text: " {cpu}%"}}
+
+    - battery:
+        name: BAT0
+        poll-interval: 30
+        content:
+          map:
+            tag: state
+            values:
+              full:
+                - string: {text: ""}
+              discharging:
+                - ramp:
+                    tag: capacity
+                    items:
+                      - string: {text: , foreground: ff0000ff, font: *font-icon}
+                      - string: {text: , font: *font-icon}
+                      - string: {text: , font: *font-icon}
+                      - string: {text: , font: *font-icon}
+                      - string: {text: , font: *font-icon}
+                - string: {text: " {capacity}%"}
+              charging:
+                - string: {text: " {capacity}%", foreground: 00ff00ff}
+                    
+    - clock:
+        time-format: "%r"
+        date-format: "%b %d %a"
+        content:
+          - string: {text: " {date}", right-margin: 10}
+          - string: {text: " {time}"}
