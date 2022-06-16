@@ -1,5 +1,0 @@
-[output *]
-image=~Pictures/cowboybebop.png
-filter=nearest
-scaling-mode=fill
-anchor=center
