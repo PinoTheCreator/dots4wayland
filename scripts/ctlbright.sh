@@ -1,22 +1,19 @@
 #!/bin/bash
 
-DEVICE="-d amdgpu_bl0"
-
 case $1 in
 	+)
-		MODE="+"
+		MODE="-A"
 		;;
 	-)
-		MODE="-"
+		MODE="-U"
 		;;
 	*)
 		exit 1
 		;;
 esac
 
-# no output
-brightnessctl $DEVICE set 5%$MODE &> /dev/null
+doas brillo -q $MODE 5
 
-PERCENTAGE=$(expr $(brightnessctl $DEVICE g) '*' 100 '/' 255)
+PERCENTAGE=$(brillo)
 
 dunstify -a "multimedial" -r "10000" -h int:value:$PERCENTAGE -i "dialog-information" "Brightness: $PERCENTAGE%"
