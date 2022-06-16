@@ -46,4 +46,4 @@ case $choice in
 		dunstify "But nothing happened..." && exit 1;;
 esac
 
-foot $EDITOR "$choice"
+footclient $EDITOR "$choice"
