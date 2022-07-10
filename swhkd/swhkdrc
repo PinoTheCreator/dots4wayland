@@ -1,0 +1,14 @@
+xf86audioraisevolume
+	changevolume.sh high
+
+xf86audiolowervolume
+	changevolume.sh low
+
+xf86audiomute
+	changevolume.sh muted
+
+super + print
+	screenshot.sh
+
+super + return
+  foot
